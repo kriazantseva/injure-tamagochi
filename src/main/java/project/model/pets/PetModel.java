@@ -1,4 +1,4 @@
-package project.model;
+package project.model.pets;
 
 import java.time.LocalDateTime;
 
