@@ -1,15 +1,17 @@
 package project.model.indicators.statuses;
 
-public enum HungerStatuses {
-    FULL(80),
-    SATISFIED(60),
-    SLIGHTLY_HUNGRY(40),
-    HUNGRY(20),
-    STARVING(10);
+public enum WellBeingStatuses {
+    EXCELLENT(7),
+    GOOD(6),
+    FAIR(5),
+    TIRED(4),
+    UNWELL(3),
+    SICK(2),
+    DEAD(1);
 
     private final int threshold;
 
-    HungerStatuses(int threshold) {
+    WellBeingStatuses(int threshold) {
         this.threshold = threshold;
     };
 
