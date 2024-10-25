@@ -1,7 +1,10 @@
 package project.model.indicators;
 
+import project.exceptions.NoSuchIndicatorException;
 import project.model.indicators.statuses.EnergyStatuses;
 import project.model.indicators.statuses.HungerStatuses;
+import project.model.indicators.statuses.WellBeingStatuses;
+import project.model.indicators.wellbeing_dependency.WellBeingDependencies;
 
 /*індикатори самопочуття, які впливають на стан тваринки*/
 public enum Indicators implements getStatusProcess {
@@ -17,15 +20,25 @@ public enum Indicators implements getStatusProcess {
                     return status;
                 }
             }
-            return HungerStatuses.EXHAUSTED; // Якщо поточне значення нижче всіх порогів
+            return HungerStatuses.STARVING; // Якщо поточне значення нижче всіх порогів
         }
     },
-    WELL_BEING(100) {
-        /*єдиний індикатор, який не має підстатусів та повертає числовий показник*/
+    WELL_BEING(7) {
+        /*this is a special indicator that doesn't independent, it's level depends on levels of other indicators*/
+        /*also this is an example of tiny minus of enums, if some constant is slightly different from other
+        * constants, it has a trouble. Here was trouble with currentValue, which in Well_Being was redundant
+        * and made it look pretty ugly, so I fall to some trick */
         @Override
         public Object getStatus(int currentValue) {
-            Integer status = currentValue;
-            return status;
+            WELL_BEING.checkCurrentValue(currentValue);
+            for (WellBeingStatuses status : WellBeingStatuses.values()) {
+                if (currentValue == status.getThreshold()) {
+                    return status;
+                }
+            }
+            throw new NoSuchIndicatorException("Indicator of well being has troubles");
+//            WellBeingDependencies dependencies = new WellBeingDependencies();
+//            return dependencies.wellBeingStatus();
         }
     },
     ENERGY(100) {
