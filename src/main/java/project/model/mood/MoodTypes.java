@@ -12,7 +12,7 @@ public enum MoodTypes {
     INDIFFERENT, //A neutral state, feeling neither good nor bad
     IRRITATED, //Feeling slightly annoyed or bothered
     WORRIED, //Anxious or concerned about something
-    SAD, //Feeling down or low, lacking energy
     ANGRY, //Feeling frustrated, upset, or annoyed
+    SAD, //Feeling down or low, lacking energy
     HOPELESS //A deep feeling of despair and lack of motivation
 }

@@ -50,7 +50,7 @@ public enum LevelOfPetsHandler {
     }
 
     private int increaseCurrentValue(int levelIncrease, int currentValue) {
-        int increasedValue = currentValue - levelIncrease;
+        int increasedValue = currentValue + levelIncrease;
         return Math.max(increasedValue, 0);
     }
 }

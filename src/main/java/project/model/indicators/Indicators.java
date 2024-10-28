@@ -53,21 +53,6 @@ public enum Indicators implements getStatusProcess {
             return EnergyStatuses.EXHAUSTED; // Якщо поточне значення нижче всіх порогів
         }
     };
-//    MOOD (6) {
-//        @Override
-//        public Object getStatus(int currentValue) {
-//            return null;
-//        }
-//
-//        public enum MoodStatuses {
-//            HAPPY,
-//            INSPIRED,
-//            INDIFFERENT,
-//            WARY,
-//            SAD,
-//            ANGRY
-//        }
-//    },
 //    CLEANLINESS(100) {
 //        @Override
 //        public Object getStatus(int currentValue) {
