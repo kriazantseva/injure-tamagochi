@@ -1,11 +1,16 @@
 package project;
 
+import project.model.indicators.statuses.WellBeingStatuses;
 import project.model.items.food.FoodItems;
 import project.model.items.food.food_diet.RandomFoodDiet;
+import project.model.items.food.treats.FoodTreatsForCats;
+import project.model.items.food.treats.FoodTreatsForDogs;
+import project.model.items.food.treats.FoodTreatsForFerrets;
 import project.model.mood.MoodGenerator;
 import project.service.feeding.Feeding;
 import project.service.feeding.FeedingService;
 import project.service.feeding.FoodDietRandomizer;
+import project.service.feeding.treating.*;
 
 import java.util.EnumSet;
 
@@ -64,7 +69,7 @@ public class Main {
 //        feedingService.feeding(FoodItems.RABBIT);
 //        System.out.println(feedingService.impactOnMood(FoodItems.RABBIT));
 
-        System.out.println(FoodDietRandomizer.getRandomNeutralDiet());
+//        System.out.println(FoodDietRandomizer.getRandomNeutralDiet());
 
 //        RandomFoodDiet.NEUTRAL.init();
 //        for(int i = 0; i < 50; i++) {
@@ -87,5 +92,17 @@ public class Main {
 //            }
 //            System.out.println("----------");
 //        }
+
+        Treat<FoodTreatsForFerrets> treat = new TreatForFerretService(FoodTreatsForFerrets.class);
+        System.out.println(treat.giveTreat(FoodTreatsForFerrets.MICE, WellBeingStatuses.GOOD, null));
+        System.out.println(treat.getTreatSet());
+
+        Treat<FoodTreatsForCats> treatCat = new TreatForCatService(FoodTreatsForCats.class);
+        System.out.println(treatCat.giveTreat(FoodTreatsForCats.CATNIP, WellBeingStatuses.GOOD, null));
+        System.out.println(treatCat.getTreatSet());
+
+        Treat<FoodTreatsForDogs> treatDog = new TreatForDogService(FoodTreatsForDogs.class);
+        System.out.println(treatDog.giveTreat(FoodTreatsForDogs.YOGURT, WellBeingStatuses.GOOD, null));
+        System.out.println(treatDog.getTreatSet());
     }
 }
