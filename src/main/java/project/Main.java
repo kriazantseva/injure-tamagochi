@@ -7,6 +7,8 @@ import project.model.items.food.treats.FoodTreatsForCats;
 import project.model.items.food.treats.FoodTreatsForDogs;
 import project.model.items.food.treats.FoodTreatsForFerrets;
 import project.model.mood.MoodGenerator;
+import project.model.pets.LevelOfPets;
+import project.service.PetSimulator;
 import project.service.feeding.Feeding;
 import project.service.feeding.FeedingService;
 import project.service.feeding.FoodDietRandomizer;
@@ -16,8 +18,8 @@ import java.util.EnumSet;
 
 public class Main {
     public static void main(String[] args) {
-//        PetSimulator petSimulator = new PetSimulator();
-//        petSimulator.simulate(LevelOfPets.HARD);
+        PetSimulator petSimulator = new PetSimulator();
+        petSimulator.simulate(LevelOfPets.HARD);
 //
 //        System.out.println(LevelOfPetsStarter.indicatorsValues.keySet());
 
@@ -34,7 +36,7 @@ public class Main {
 //        feedingService.feeding(FoodItems.RABBIT);
 //        System.out.println(feedingService.impactOnMood(FoodItems.RABBIT));
 
-        MoodGenerator moodGenerator = new MoodGenerator();
+//        MoodGenerator moodGenerator = new MoodGenerator();
 //        System.out.println(moodGenerator.getRandomMoodFromMoodSet(MoodTypeClusters.DEPRESSIVE));
 //        EnumSet<MoodTypes> init = MoodTypeClusters.MILDLY_NEGATIVE.init();
 //        for (MoodTypes mood : init) {
@@ -93,16 +95,16 @@ public class Main {
 //            System.out.println("----------");
 //        }
 
-        Treat<FoodTreatsForFerrets> treat = new TreatForFerretService(FoodTreatsForFerrets.class);
-        System.out.println(treat.giveTreat(FoodTreatsForFerrets.MICE, WellBeingStatuses.GOOD, null));
-        System.out.println(treat.getTreatSet());
-
-        Treat<FoodTreatsForCats> treatCat = new TreatForCatService(FoodTreatsForCats.class);
-        System.out.println(treatCat.giveTreat(FoodTreatsForCats.CATNIP, WellBeingStatuses.GOOD, null));
-        System.out.println(treatCat.getTreatSet());
-
-        Treat<FoodTreatsForDogs> treatDog = new TreatForDogService(FoodTreatsForDogs.class);
-        System.out.println(treatDog.giveTreat(FoodTreatsForDogs.YOGURT, WellBeingStatuses.GOOD, null));
-        System.out.println(treatDog.getTreatSet());
+//        Treat<FoodTreatsForFerrets> treat = new TreatForFerretService(FoodTreatsForFerrets.class);
+//        System.out.println(treat.giveTreat(FoodTreatsForFerrets.MICE, WellBeingStatuses.GOOD, null));
+//        System.out.println(treat.getTreatSet());
+//
+//        Treat<FoodTreatsForCats> treatCat = new TreatForCatService(FoodTreatsForCats.class);
+//        System.out.println(treatCat.giveTreat(FoodTreatsForCats.CATNIP, WellBeingStatuses.GOOD, null));
+//        System.out.println(treatCat.getTreatSet());
+//
+//        Treat<FoodTreatsForDogs> treatDog = new TreatForDogService(FoodTreatsForDogs.class);
+//        System.out.println(treatDog.giveTreat(FoodTreatsForDogs.YOGURT, WellBeingStatuses.GOOD, null));
+//        System.out.println(treatDog.getTreatSet());
     }
 }

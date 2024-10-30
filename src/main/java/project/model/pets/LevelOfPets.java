@@ -24,7 +24,7 @@ public enum LevelOfPets implements ChangeOfIndicators {
         @Override
         public int changeIndicatorsLevel(Indicators indicator) {
             return LevelOfPetsHandler.DECREASE.updateIndicatorValue(
-                    indicator, LevelOfPetsUtil.TEST_LEVEL_DECREASE, LevelOfPetsHandler.DECREASE
+                    indicator, LevelOfPetsUtil.HARD_LEVEL_DECREASE, LevelOfPetsHandler.DECREASE
             );
         }
     }
