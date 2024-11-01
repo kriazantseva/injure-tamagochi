@@ -66,4 +66,6 @@ public interface Treat<T extends Enum<T>> {
      * @return an {@code EnumSet} of preferred treats for the pet
      */
     EnumSet<T> getTreatSet();
+
+    void updateTreatSetInPet();
 }

@@ -5,6 +5,7 @@ import project.model.items.food.food_diet.LikedFoodDiet;
 import project.model.items.food.food_diet.NeutralFoodDiet;
 import project.model.pets.LevelOfPets;
 import project.model.pets.PetModel;
+import project.model.pets.PetType;
 
 import java.util.EnumSet;
 import java.util.HashMap;
@@ -27,9 +28,23 @@ public final class FoodDietRandomizer {
         EnumSet<NeutralFoodDiet> neutralSet = EnumSet.allOf(NeutralFoodDiet.class);
         Map<Integer, NeutralFoodDiet> neutralMap = new HashMap<>();
         int index = 1;
+
+        //Add extra constraints for ferrets cuz they can't like vegetables, it's not healthy for them
+        if(PetModel.getPetType() == PetType.FERRET) {
+            for(NeutralFoodDiet neutral : neutralSet) {
+                if(neutral == NeutralFoodDiet.RANDOM ||
+                        neutral == NeutralFoodDiet.VEGETARIAN ||
+                        neutral == NeutralFoodDiet.FOOD_ENTHUSIAST ||
+                        neutral == NeutralFoodDiet.GOURMAND ||
+                        neutral == NeutralFoodDiet.NOT_MEAT_NOT_FISH) {
+                    continue;
+                }
+                neutralMap.put(index, neutral);
+                index++;
+            }
         //Check if LevelOfPets equals to Hard level
         //if it is, include random diet in neutralMap
-        if(PetModel.getLevel() == LevelOfPets.HARD) {
+        } else if(PetModel.getLevel() == LevelOfPets.HARD) {
             //if it has Random index be chosen,
             // Random diet directly included into neutralFoodDiet
             if(chanceToGetRandomDiet()) {

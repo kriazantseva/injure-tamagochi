@@ -2,6 +2,7 @@ package project.service.feeding.treating;
 
 import project.model.indicators.statuses.WellBeingStatuses;
 import project.model.mood.MoodTypes;
+import project.model.pets.PetModel;
 
 import java.util.EnumSet;
 
@@ -30,5 +31,11 @@ public abstract class TreatForPet<T extends Enum<T>> implements Treat<T> {
     @Override
     public MoodTypes giveTreat(T treat, WellBeingStatuses wellBeingStatus, EnumSet<T> treatSet) {
         return Treat.super.giveTreat(treat, wellBeingStatus, treatsForPet);
+    }
+
+    @Override
+    public void updateTreatSetInPet() {
+        PetModel<T> petModel = new PetModel();
+        petModel.setFavTreats(treatsForPet);
     }
 }
