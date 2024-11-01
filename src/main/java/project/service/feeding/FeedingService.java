@@ -1,15 +1,15 @@
 package project.service.feeding;
 
-import project.model.indicators.Indicators;
-import project.model.items.food.FoodItems;
-import project.model.items.food.food_diet.DislikedFoodDiet;
-import project.model.items.food.food_diet.LikedFoodDiet;
-import project.model.items.food.food_diet.NeutralFoodDiet;
-import project.model.mood.MoodGenerator;
-import project.model.mood.MoodTypeClusters;
-import project.model.mood.MoodTypes;
-import project.model.pets.LevelOfPets;
-import project.model.pets.LevelOfPetsHandler;
+import project.enums.indicators.Indicators;
+import project.enums.items.food.FoodItems;
+import project.enums.items.food.WaterItem;
+import project.enums.items.food.food_diet.DislikedFoodDiet;
+import project.enums.items.food.food_diet.LikedFoodDiet;
+import project.enums.items.food.food_diet.NeutralFoodDiet;
+import project.enums.mood.MoodGenerator;
+import project.enums.mood.MoodTypeClusters;
+import project.enums.mood.MoodTypes;
+import project.enums.pets.LevelOfPetsHandler;
 
 /**
  * FeedingService class implements the Feeding interface and provides functionality
@@ -85,6 +85,16 @@ public class FeedingService implements Feeding {
     }
 
     /**
+     * Processes give water for the only one existing water item, adjusting the thirst indicator.
+     *
+     * @param water The water item to give water to the pet.
+     */
+    @Override
+    public void giveWater(WaterItem water) {
+        giveWaterProcess(water.getPoints());
+    }
+
+    /**
      * Checks if the given food item belongs to the disliked diet category.
      *
      * @param food The food item to check.
@@ -116,6 +126,18 @@ public class FeedingService implements Feeding {
     private void feedingProcess(int points) {
         LevelOfPetsHandler.INCREASE.updateIndicatorValue(
                 Indicators.HUNGER, points,
+                LevelOfPetsHandler.INCREASE
+        );
+    }
+
+    /**
+     * Updates the pet's thirst indicator based on the give water process and the type of food consumed.
+     *
+     * @param points The points to increase thirst by, calculated based on food type.
+     */
+    private void giveWaterProcess(int points) {
+        LevelOfPetsHandler.INCREASE.updateIndicatorValue(
+                Indicators.THIRST, points,
                 LevelOfPetsHandler.INCREASE
         );
     }

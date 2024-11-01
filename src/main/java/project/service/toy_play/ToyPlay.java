@@ -1,11 +1,11 @@
 package project.service.toy_play;
 
-import project.model.indicators.statuses.WellBeingStatuses;
-import project.model.items.toys.ToysForCats;
-import project.model.items.toys.ToysForDogs;
-import project.model.mood.MoodGenerator;
-import project.model.mood.MoodTypeClusters;
-import project.model.mood.MoodTypes;
+import project.enums.indicators.statuses.WellBeingStatuses;
+import project.enums.items.toys.ToysForCats;
+import project.enums.items.toys.ToysForDogs;
+import project.enums.mood.MoodGenerator;
+import project.enums.mood.MoodTypeClusters;
+import project.enums.mood.MoodTypes;
 
 import java.util.EnumSet;
 import java.util.Random;
@@ -33,6 +33,10 @@ public interface ToyPlay<T extends Enum<T>> {
         moodGenerator.setMoodMap(MoodTypes.INDIFFERENT);
         return moodGenerator.getMoodMap();
     }
+
+    EnumSet<T> getToySet();
+
+    void updateToySetInPet(EnumSet<T> toySet);
 
     private boolean chanceOfSolving() {
         final int RANDOM_INDEX = 1;

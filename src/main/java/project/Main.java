@@ -1,25 +1,19 @@
 package project;
 
-import project.model.indicators.statuses.WellBeingStatuses;
-import project.model.items.food.FoodItems;
-import project.model.items.food.food_diet.RandomFoodDiet;
-import project.model.items.food.treats.FoodTreatsForCats;
-import project.model.items.food.treats.FoodTreatsForDogs;
-import project.model.items.food.treats.FoodTreatsForFerrets;
-import project.model.mood.MoodGenerator;
-import project.model.pets.LevelOfPets;
+import project.enums.indicators.statuses.WellBeingStatuses;
+import project.enums.items.food.treats.FoodTreatsForCats;
+import project.enums.pets.LevelOfPets;
+import project.enums.pets.PetType;
+import project.enums.pets.pet_model.PetCat;
+import project.enums.pets.pet_model.PetInfoUtil;
 import project.service.PetSimulator;
-import project.service.feeding.Feeding;
-import project.service.feeding.FeedingService;
-import project.service.feeding.FoodDietRandomizer;
-import project.service.feeding.treating.*;
-
-import java.util.EnumSet;
+import project.service.feeding.treating.Treat;
+import project.service.feeding.treating.TreatForCatService;
 
 public class Main {
     public static void main(String[] args) {
-        PetSimulator petSimulator = new PetSimulator();
-        petSimulator.simulate(LevelOfPets.HARD);
+//        PetSimulator petSimulator = new PetSimulator();
+//        petSimulator.simulate(LevelOfPets.HARD);
 //
 //        System.out.println(LevelOfPetsStarter.indicatorsValues.keySet());
 
@@ -106,5 +100,13 @@ public class Main {
 //        Treat<FoodTreatsForDogs> treatDog = new TreatForDogService(FoodTreatsForDogs.class);
 //        System.out.println(treatDog.giveTreat(FoodTreatsForDogs.YOGURT, WellBeingStatuses.GOOD, null));
 //        System.out.println(treatDog.getTreatSet());
+
+        PetCat cat = new PetCat(LevelOfPets.EASY, PetType.CAT);
+        PetInfoUtil.init(cat);
+        Treat<FoodTreatsForCats> treatService = new TreatForCatService(FoodTreatsForCats.class, cat);
+        treatService.updateTreatSetInPet();
+        System.out.println(treatService.giveTreat(FoodTreatsForCats.TUNA_BITES, WellBeingStatuses.GOOD, null));
+        System.out.println(treatService.getTreatSet());
+        System.out.println(cat.getFavTreats());
     }
 }

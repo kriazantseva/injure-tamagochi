@@ -1,11 +1,12 @@
 package project.service.feeding;
 
-import project.model.items.food.food_diet.DislikedFoodDiet;
-import project.model.items.food.food_diet.LikedFoodDiet;
-import project.model.items.food.food_diet.NeutralFoodDiet;
-import project.model.pets.LevelOfPets;
-import project.model.pets.PetModel;
-import project.model.pets.PetType;
+import project.enums.items.food.food_diet.DislikedFoodDiet;
+import project.enums.items.food.food_diet.LikedFoodDiet;
+import project.enums.items.food.food_diet.NeutralFoodDiet;
+import project.enums.pets.LevelOfPets;
+import project.enums.pets.pet_model.PetInfoUtil;
+import project.enums.pets.pet_model.PetModel;
+import project.enums.pets.PetType;
 
 import java.util.EnumSet;
 import java.util.HashMap;
@@ -30,7 +31,7 @@ public final class FoodDietRandomizer {
         int index = 1;
 
         //Add extra constraints for ferrets cuz they can't like vegetables, it's not healthy for them
-        if(PetModel.getPetType() == PetType.FERRET) {
+        if(PetInfoUtil.getPetType() == PetType.FERRET) {
             for(NeutralFoodDiet neutral : neutralSet) {
                 if(neutral == NeutralFoodDiet.RANDOM ||
                         neutral == NeutralFoodDiet.VEGETARIAN ||
@@ -44,7 +45,7 @@ public final class FoodDietRandomizer {
             }
         //Check if LevelOfPets equals to Hard level
         //if it is, include random diet in neutralMap
-        } else if(PetModel.getLevel() == LevelOfPets.HARD) {
+        } else if(PetInfoUtil.getLevel() == LevelOfPets.HARD) {
             //if it has Random index be chosen,
             // Random diet directly included into neutralFoodDiet
             if(chanceToGetRandomDiet()) {

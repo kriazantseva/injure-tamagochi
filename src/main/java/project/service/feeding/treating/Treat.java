@@ -1,8 +1,8 @@
 package project.service.feeding.treating;
 
-import project.model.indicators.statuses.WellBeingStatuses;
-import project.model.mood.MoodGenerator;
-import project.model.mood.MoodTypes;
+import project.enums.indicators.statuses.WellBeingStatuses;
+import project.enums.mood.MoodGenerator;
+import project.enums.mood.MoodTypes;
 
 import java.util.EnumSet;
 
