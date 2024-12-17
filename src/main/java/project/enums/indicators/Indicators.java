@@ -6,21 +6,21 @@ import project.enums.indicators.statuses.EnergyStatuses;
 import project.enums.indicators.statuses.HungerStatuses;
 import project.enums.indicators.statuses.WellBeingStatuses;
 
-/*індикатори самопочуття, які впливають на стан тваринки*/
+/*indicators that have impact on pet*/
 public enum Indicators implements getStatusProcess {
     HUNGER (100) {
-        /*динамічна зміна статусів голоду
-        * @param currentValue приймає поточне значення індикатору голоду
-        * @return повертає статус*/
+        /* Dynamic status update for hunger
+         * @param currentValue accepts the current value of the hunger indicator
+         * @return returns the status */
         @Override
         public HungerStatuses getStatus(int currentValue) {
-            HUNGER.checkCurrentValue(currentValue); //перевірка валідності поточного значення
+            HUNGER.checkCurrentValue(currentValue);
             for (HungerStatuses status : HungerStatuses.values()) {
                 if (currentValue >= status.getThreshold()) {
                     return status;
                 }
             }
-            return HungerStatuses.STARVING; // Якщо поточне значення нижче всіх порогів
+            return HungerStatuses.STARVING;
         }
     },
     WELL_BEING(7) {
@@ -50,7 +50,7 @@ public enum Indicators implements getStatusProcess {
                     return status;
                 }
             }
-            return EnergyStatuses.EXHAUSTED; // Якщо поточне значення нижче всіх порогів
+            return EnergyStatuses.EXHAUSTED;
         }
     },
     THIRST(100) {
@@ -62,7 +62,7 @@ public enum Indicators implements getStatusProcess {
                     return status;
                 }
             }
-            return ThirstStatuses.DEHYDRATED; // Якщо поточне значення нижче всіх порогів
+            return ThirstStatuses.DEHYDRATED;
         }
     };
 //    CLEANLINESS(100) {
@@ -95,7 +95,7 @@ public enum Indicators implements getStatusProcess {
         }
         if (currentValue <= 0) {
             System.out.println("Sorry, your pet is dead now(((");
-            return 1; //в майбутньому буде особливий статус
+            return 1;
         }
         return currentValue;
     }

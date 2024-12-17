@@ -24,7 +24,11 @@ public final class MoodAndWellBeingDependencies {
     private static final int MAX_INDEX = 3;
 
     /** Mood generator to manage mood states based on well-being changes. */
-    private final MoodGenerator moodGenerator = new MoodGenerator();
+    private final MoodGenerator moodGenerator;
+
+    public MoodAndWellBeingDependencies(MoodGenerator moodGenerator) {
+        this.moodGenerator = moodGenerator;
+    }
 
     /**
      * Updates the mood of the pet depending on its current well-being status.

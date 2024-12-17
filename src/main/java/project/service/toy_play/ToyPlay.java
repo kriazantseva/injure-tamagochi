@@ -11,16 +11,16 @@ import java.util.EnumSet;
 import java.util.Random;
 
 public interface ToyPlay<T extends Enum<T>> {
-    default MoodTypes giveToy(T toy, WellBeingStatuses wellBeingStatus, EnumSet<T> toysSet) {
-        MoodGenerator moodGenerator = new MoodGenerator();
+    default MoodTypes giveToy(T toy, WellBeingStatuses wellBeingStatus, EnumSet<T> toysSet,
+                              MoodGenerator moodGenerator) {
         if(wellBeingStatus == WellBeingStatuses.EXCELLENT || wellBeingStatus == WellBeingStatuses.GOOD ||
                 wellBeingStatus == WellBeingStatuses.FAIR || wellBeingStatus == WellBeingStatuses.TIRED) {
             if(toy == ToysForCats.INTERACTIVE_PUZZLE_FEEDER || toy == ToysForDogs.INTERACTIVE_TREAT_PUZZLE) {
-                if(chanceOfSolving()) {
-                    TreatToySolvingCalc.solvedTimes++;
+                if(TreatToySolvingCalc.chanceOfSolving()) {
+                    System.out.println(TreatToySolvingCalc.solvedTimes);
                     return moodGenerator.getRandomMoodFromUpdatedRandomMap(MoodTypeClusters.POSITIVE);
                 }
-                TreatToySolvingCalc.tries++;
+                System.out.println(TreatToySolvingCalc.tries);
                 return moodGenerator.getRandomMoodFromUpdatedRandomMap(MoodTypeClusters.MILDLY_NEGATIVE,
                         MoodTypeClusters.NEUTRAL);
             }
@@ -37,20 +37,4 @@ public interface ToyPlay<T extends Enum<T>> {
     EnumSet<T> getToySet();
 
     void updateToySetInPet(EnumSet<T> toySet);
-
-    private boolean chanceOfSolving() {
-        final int RANDOM_INDEX = 1;
-        final int MAX_INDEX = 3;
-        final Random random = new Random();
-        if(TreatToySolvingCalc.solvedTimes >= 0 && TreatToySolvingCalc.solvedTimes <= 5) {
-            return random.nextInt(MAX_INDEX) == RANDOM_INDEX;
-        }
-        if(TreatToySolvingCalc.solvedTimes > 5) {
-            return true;
-        }
-        if(TreatToySolvingCalc.tries == 5 && TreatToySolvingCalc.solvedTimes <= 1) {
-            return false;
-        }
-        return false;
-    }
 }

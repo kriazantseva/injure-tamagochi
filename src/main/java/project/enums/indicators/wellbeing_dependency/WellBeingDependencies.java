@@ -3,8 +3,6 @@ package project.enums.indicators.wellbeing_dependency;
 import project.enums.indicators.statuses.WellBeingStatuses;
 
 public class WellBeingDependencies {
-    private final MoodAndWellBeingDependencies moodAndWellBeingDependencies =
-            new MoodAndWellBeingDependencies();
     /*this is the trick for WELL_BEING status changes*/
     /*the standalone method that checks current value, depends on levels of other indicators*/
     public int wellBeingCurrentValueChecker(int hungerValue, int energyValue, int thirstValue) {
@@ -21,6 +19,8 @@ public class WellBeingDependencies {
             wellBeingStatuses = WellBeingStatuses.UNWELL;
         } else if ((hungerValue >= 10 && energyValue >= 10) || thirstValue >= 10) {
             wellBeingStatuses = WellBeingStatuses.SICK;
+        } else if (hungerValue < 5 || energyValue < 5 || thirstValue < 5) {
+            wellBeingStatuses = WellBeingStatuses.DEAD;
         }
         return wellBeingStatuses.getThreshold();
     }

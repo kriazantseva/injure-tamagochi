@@ -1,6 +1,7 @@
 package project.service.feeding.treating;
 
 import project.enums.indicators.statuses.WellBeingStatuses;
+import project.enums.mood.MoodGenerator;
 import project.enums.mood.MoodTypes;
 
 import java.util.EnumSet;
@@ -28,7 +29,8 @@ public abstract class TreatForPet<T extends Enum<T>> implements Treat<T> {
     //implementation of giveTreat method from Treat<T extends Enum<T>> interface
     //use EnumSet<T> treatsForPet as parameter
     @Override
-    public MoodTypes giveTreat(T treat, WellBeingStatuses wellBeingStatus, EnumSet<T> treatSet) {
-        return Treat.super.giveTreat(treat, wellBeingStatus, treatsForPet);
+    public MoodTypes giveTreat(T treat, WellBeingStatuses wellBeingStatus, EnumSet<T> treatSet,
+                               MoodGenerator moodGenerator) {
+        return Treat.super.giveTreat(treat, wellBeingStatus, treatsForPet, moodGenerator);
     }
 }

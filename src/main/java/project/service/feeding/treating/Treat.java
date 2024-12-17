@@ -37,8 +37,7 @@ public interface Treat<T extends Enum<T>> {
      * @return the resulting {@code MoodTypes} based on the treat and well-being status
      */
     default MoodTypes giveTreat(T treat, WellBeingStatuses wellBeingStatus,
-                                EnumSet<T> treatSet) {
-        MoodGenerator moodGenerator = new MoodGenerator();
+                                EnumSet<T> treatSet, MoodGenerator moodGenerator) {
         if(treatSet.contains(treat) &&
                 (wellBeingStatus == WellBeingStatuses.EXCELLENT ||
                         wellBeingStatus == WellBeingStatuses.GOOD)) {

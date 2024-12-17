@@ -1,18 +1,25 @@
 package project.service;
 
 import project.enums.indicators.Indicators;
+import project.enums.indicators.statuses.EnergyStatuses;
+import project.enums.indicators.statuses.HungerStatuses;
+import project.enums.indicators.statuses.ThirstStatuses;
 import project.enums.indicators.statuses.WellBeingStatuses;
 import project.enums.indicators.wellbeing_dependency.MoodAndWellBeingDependencies;
 import project.enums.indicators.wellbeing_dependency.WellBeingDependencies;
+import project.enums.mood.MoodGenerator;
+import project.enums.mood.MoodTypes;
 import project.enums.pets.LevelOfPets;
 import project.enums.pets.LevelOfPetsHandler;
 import project.enums.pets.LevelOfPetsStarter;
 
+import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class PetSimulator {
+    private final MoodGenerator moodGenerator;
     private final Indicators hungerIndicator;
     private final Indicators wellbeingIndicator;
     private final Indicators energyIndicator;
@@ -25,7 +32,8 @@ public class PetSimulator {
     private WellBeingStatuses oldWellBeingStatus;
     private WellBeingStatuses newWellBeingStatus;
 
-    public PetSimulator() {
+    public PetSimulator(MoodGenerator moodGenerator) {
+        this.moodGenerator = moodGenerator;
         this.hungerIndicator = Indicators.HUNGER;
         this.wellbeingIndicator = Indicators.WELL_BEING;
         this.energyIndicator = Indicators.ENERGY;
@@ -42,7 +50,7 @@ public class PetSimulator {
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
         WellBeingDependencies wellBeingDependencies = new WellBeingDependencies();
         MoodAndWellBeingDependencies moodAndWellBeingDependencies =
-                new MoodAndWellBeingDependencies();
+                new MoodAndWellBeingDependencies(moodGenerator);
 
         scheduler.scheduleAtFixedRate(() -> {
             hungerValue = level.changeIndicatorsLevel(hungerIndicator);
@@ -76,6 +84,26 @@ public class PetSimulator {
                 scheduler.shutdown();
             }
         }, 0, 5, TimeUnit.SECONDS);
+    }
+
+    public boolean isDead() {
+        return wellbeingIndicator.getStatus(wellbeingValue) == WellBeingStatuses.DEAD;
+    }
+
+    public WellBeingStatuses getWellBeingStatus() {
+        return newWellBeingStatus;
+    }
+
+    public HungerStatuses getHungerStatus() {
+        return (HungerStatuses) Indicators.HUNGER.getStatus(hungerValue);
+    }
+
+    public EnergyStatuses getEnergyStatus() {
+        return (EnergyStatuses) Indicators.ENERGY.getStatus(energyValue);
+    }
+
+    public ThirstStatuses getThirstStatus() {
+        return (ThirstStatuses) Indicators.THIRST.getStatus(thirstValue);
     }
 
     private boolean checkNewishOfWellBeingStatus(WellBeingStatuses oldSt, WellBeingStatuses newSt) {

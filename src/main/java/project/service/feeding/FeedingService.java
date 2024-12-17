@@ -29,6 +29,11 @@ public class FeedingService implements Feeding {
     private final NeutralFoodDiet neutralFood = FoodDietRandomizer.getRandomNeutralDiet();
     private final LikedFoodDiet likedFood = FoodDietRandomizer.getLikedDiet();
     private final DislikedFoodDiet dislikedFood = FoodDietRandomizer.getDislikedDiet();
+    private final MoodGenerator moodGenerator;
+
+    public FeedingService(MoodGenerator moodGenerator) {
+        this.moodGenerator = moodGenerator;
+    }
 
     /**
      * Processes feeding for the given food item, adjusting the hunger indicator based on food type.
@@ -47,22 +52,26 @@ public class FeedingService implements Feeding {
             foodIndex = likedFood.getIndex();
             System.out.println("This food is liked one=)");
             feedingProcess((int) (food.getPointsOfSaturation() * foodIndex));
-            System.out.println("Indicator raised on: " + (int) (food.getPointsOfSaturation() * foodIndex) + " points!");
+            impactOnMood(food);
+//            System.out.println("Indicator raised on: " + (int) (food.getPointsOfSaturation() * foodIndex) + " points!");
             return;
         }
         // Neutral food gives a standard hunger increase
         if(neutralFood.init() != null && neutralFood.init().contains(food)) {
             feedingProcess((int) (food.getPointsOfSaturation() * foodIndex));
+            impactOnMood(food);
             return;
         }
         // Disliked food might be refused or slightly increase hunger
         if(checkDislikedFood(food)) {
             if(FoodRefuseRandomizer.chanceOfRefuseDefault()) {
                 feedingProcess(REFUSE_TO_EAT);
+                impactOnMood(food);
                 System.out.println("I'm done.. I don't want to eat this shit>:(");
                 return;
             }
             feedingProcess((int) (food.getPointsOfSaturation() * foodIndex));
+            impactOnMood(food);
         }
     }
 
@@ -76,7 +85,6 @@ public class FeedingService implements Feeding {
      */
     @Override
     public MoodTypes impactOnMood(FoodItems food) {
-        MoodGenerator moodGenerator = new MoodGenerator();
         if(checkDislikedFood(food)) {
             moodGenerator.setMoodMap(getRandomNegativeOrDepressiveMoodType());
             System.out.println("Oh... Discusting..");
@@ -110,7 +118,6 @@ public class FeedingService implements Feeding {
      * @return A random MoodType from mildly negative, strongly negative, or depressive clusters.
      */
     private MoodTypes getRandomNegativeOrDepressiveMoodType() {
-        MoodGenerator moodGenerator = new MoodGenerator();
         return moodGenerator.getRandomMoodFromUpdatedRandomMap(
                 MoodTypeClusters.MILDLY_NEGATIVE,
                 MoodTypeClusters.STRONGLY_NEGATIVE,
